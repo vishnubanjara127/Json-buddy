@@ -1,0 +1,72 @@
+<div class="container">
+  <header class="header">
+    <h1>JSON Buddy</h1>
+    <p class="subtitle">Format, Compress & Search JSON - by Vishnu Banjara</p>
+  </header>
+
+  <div class="main-content">
+    <div class="input-section">
+      <div class="section-header">
+        <h2>JSON Buddy</h2>
+        <div class="action-buttons">
+          <button class="btn btn-primary" (click)="formatJson()">Format</button>
+          <button class="btn btn-secondary" (click)="compressJson()">Compress</button>
+          <button class="btn btn-success copy-btn" (click)="copyToClipboard()" [disabled]="!jsonInput">
+            Copy
+          </button>
+          <button class="btn btn-danger" (click)="clearAll()">Clear</button>
+        </div>
+      </div>
+      <textarea 
+        id="jsonInput"
+        class="json-textarea" 
+        [(ngModel)]="jsonInput" 
+        placeholder="Paste your JSON here... Format or Compress to validate and transform it."
+        spellcheck="false">
+      </textarea>
+    </div>
+  </div>
+
+  <div class="search-section">
+    <div class="search-header">
+      <h2>Search in JSON</h2>
+      <div class="search-controls">
+        <input 
+          type="text" 
+          class="search-input" 
+          [(ngModel)]="searchTerm" 
+          placeholder="Enter search term..."
+          (keyup.enter)="searchInJson()">
+        <button class="btn btn-primary" (click)="searchInJson()">Search</button>
+        <button class="btn btn-nav" (click)="previousSearchResult()" [disabled]="searchResults.length === 0">
+          ↑ Prev
+        </button>
+        <button class="btn btn-nav" (click)="nextSearchResult()" [disabled]="searchResults.length === 0">
+          ↓ Next
+        </button>
+      </div>
+    </div>
+    <div class="search-results" *ngIf="searchResults.length > 0">
+      <p class="results-count">
+        Found {{ searchResults.length }} result(s) 
+        <span *ngIf="currentSearchIndex >= 0">
+          ({{ currentSearchIndex + 1 }} of {{ searchResults.length }})
+        </span>
+      </p>
+      <div class="results-list">
+        <div 
+          *ngFor="let result of searchResults; let i = index" 
+          class="result-item"
+          [class.active]="i === currentSearchIndex">
+          <span class="line-number">Line {{ result.line }}:</span>
+          <span class="result-content">{{ result.content }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="error-message" *ngIf="errorMessage">
+    <span class="error-icon">⚠️</span>
+    {{ errorMessage }}
+  </div>
+</div>
