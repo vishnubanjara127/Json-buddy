@@ -1,5 +1,5 @@
 {
-  "name": "json-editor",
+  "name": "jsonbuddy",
   "version": "1.0.0",
   "description": "A full-screen JSON editor with formatting, compression, and search capabilities",
   "scripts": {
